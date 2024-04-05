@@ -1,5 +1,8 @@
 <template>
     <lightning-card class ="card">
-        <c-account-search></c-account-search>
+        <c-account-search-card onsearchaccountcontact={searchAccountContactHandler}></c-account-search-card>
+    </lightning-card>
+    <lightning-card>
+        <c-account-search-results search-text={searchText}></c-account-search-results>
     </lightning-card>
 </template>
