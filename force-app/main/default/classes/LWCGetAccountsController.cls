@@ -1,5 +1,5 @@
 public with sharing class LWCGetAccountsController {
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<Account> getAccounts(String searchText){
         try {
             if(String.isEmpty(searchText)){
