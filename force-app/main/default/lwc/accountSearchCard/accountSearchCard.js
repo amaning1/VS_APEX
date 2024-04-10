@@ -13,4 +13,4 @@ searchText = '';
         const event = new CustomEvent('searchaccountcontact', {detail:this.searchText});
         this.dispatchEvent(event);
     }
-}
+} 
