@@ -4,7 +4,10 @@
         <lightning-datatable
                 key-field="Id"
                 data={accountsList.data}
-                columns={columns}>
+                columns={columns}
+                hide-checkbox-column="true"
+                show-row-number-column="true"
+                onrowaction={rowActionHandler}>
         </lightning-datatable>
     </div>
 </template>

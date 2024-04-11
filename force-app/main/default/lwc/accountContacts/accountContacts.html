@@ -1,0 +1,36 @@
+<template>
+    <lightning-card title={title}>
+    <lightning-layout multiple-rows class="slds-p-around_small">
+    <lightning-layout-item size="12">
+        <template if:true={isAccountSelected}>
+            <template if:true={hasContacts}>
+                <template for:each={contacts} for:item="contact">
+                    <lightning-layout class="slds-box slds-m-around_small" key={contact.Id}>
+                        <lightning-layout-item size="8">
+                            <strong>{contact.Name}</strong>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="4">
+                            <lightning-button-icon icon-name="utility:edit"    alternative-text="Edit"   class="slds-m-left_xx-small" title="Edit"></lightning-button-icon>
+
+                            <lightning-button-icon icon-name="utility:delete"    alternative-text="Delete"   class="slds-m-left_xx-small" title="Delete"></lightning-button-icon>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    
+                </template>
+            </template>
+            <template if:false={hasContacts}>
+                No Contacts Availale
+            </template>
+        </template>
+         <template if:false={isAccountSelected}>
+            <div class = "slds-align_absolute-center">
+                No Account Selected
+            </div>
+
+         </template>
+
+    </lightning-layout-item>
+ 
+    </lightning-layout>
+    </lightning-card>
+</template>

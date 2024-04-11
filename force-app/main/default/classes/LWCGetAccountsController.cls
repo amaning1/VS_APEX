@@ -14,5 +14,15 @@ public with sharing class LWCGetAccountsController {
             throw new AuraHandledException(e.getMessage());
         }
     }
+
+    @AuraEnabled(cacheable=true)
+    public static List<Contact> getAccountContacts(String accountId){
+        try {
+            return [SELECT Id, Name FROM CONTACT WHERE accountId = :accountId];
+            
+        } catch (Exception e) {
+            throw new AuraHandledException(e.getMessage());
+        }
+    }
    
 }
