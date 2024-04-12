@@ -50,7 +50,8 @@ export default class AccountContacts extends LightningElement {
     // Handler for message received by component
     handleAccountSelection(data) {
         this.accountId = data.accountId;
-        this.title = ' ${data.accountName}\'s Contacts'
+        this.title = ' ${data.accountName}\'s Contacts';
+        this.getContacts();
     }
 
     // Standard lifecycle hooks used to subscribe and unsubsubscribe to the message channel

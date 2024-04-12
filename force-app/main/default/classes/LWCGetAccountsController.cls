@@ -3,7 +3,7 @@ public with sharing class LWCGetAccountsController {
     public static List<Account> getAccounts(String searchText){
         try {
             if(String.isEmpty(searchText)){
-                return [SELECT Id, Name FROM Account];
+                return [SELECT Id, Name FROM Account LIMIT 10];
             }
             else{
                 String sText = '%' + searchText + '%';

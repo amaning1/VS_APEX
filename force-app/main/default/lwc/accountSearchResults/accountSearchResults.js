@@ -32,7 +32,7 @@ export default class AccountSearchResults extends LightningElement {
         if(event.detail.action.value == 'View_Contacts'){
             const payload = { accountId: event.detail.row.Id, accountName: event.detail.row.Name };
 
-            publish(this.messageContext, recordSelected, payload);
+            publish(this.messageContext, viewAccountContactsChannel, payload);
         }
        
     }
