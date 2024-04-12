@@ -1,5 +1,7 @@
-import { LightningElement,api,wire } from 'lwc';
-
+import { LightningElement,wire } from 'lwc';
+import LightningConfirm from 'lightning/confirm';
+import { deleteRecord } from 'lightning/uiRecordApi';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import {
     subscribe,
     unsubscribe,
@@ -16,6 +18,8 @@ export default class AccountContacts extends LightningElement {
     messageContext;
     title='Contacts';
     contacts = [];
+    editableContactId = '';
+    showModal = false;
 
     async getContacts(){
         const data = await getAccountContacts({accountId: this.accountId});
@@ -42,6 +46,27 @@ export default class AccountContacts extends LightningElement {
         }
     }
 
+    
+    editButtonHandler(event){
+        this.editableContactId = event.target.dataset.contactId;
+        this.showModal = true;
+    }
+
+   async deleteButtonHandler(event){
+    let contactId = event.target.dataset.contactId;
+        const result = await LightningConfirm.open({
+            message: 'Are you sure you want to delete this contact',
+            variant: 'headerless',
+            label: 'Confirm Deletion',
+            // setting theme would have no effect
+
+        });
+        if (result){
+            let deleted =  await deleteRecord(contactId);
+            this.showToast();
+            this.getContacts();
+        }
+    }
     unsubscribeToMessageChannel() {
         unsubscribe(this.subscription);
         this.subscription = null;
@@ -50,7 +75,7 @@ export default class AccountContacts extends LightningElement {
     // Handler for message received by component
     handleAccountSelection(data) {
         this.accountId = data.accountId;
-        this.title = ' ${data.accountName}\'s Contacts';
+        this.title = `${data.accountName}'s Contacts`;
         this.getContacts();
     }
 
@@ -61,6 +86,28 @@ export default class AccountContacts extends LightningElement {
 
     disconnectedCallback() {
         this.unsubscribeToMessageChannel();
+    }
+
+    closeModalHandler(){
+        this.showModal = false;
+        this.editableContactId = null;
+    }
+    successHandler(){
+        this.closeModalHandler();
+        this.getContacts();
+    }
+
+    addButtonHandler(){
+        this.showModal = true;
+
+    }
+
+    showToast() {
+        const event = new ShowToastEvent({
+            title: 'Contact Deleted',
+            message:'Contact Deleted Successfully',
+        variant: 'success'      });
+        this.dispatchEvent(event);
     }
 
 }
